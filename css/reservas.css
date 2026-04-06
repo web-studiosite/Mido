@@ -50,13 +50,10 @@
     letter-spacing: 0.02em;
     text-transform: uppercase;
     margin-bottom: var(--space-md);
-}
 
-.reservas-hero-subtitle {
-    font-size: 1.1rem;
-    opacity: 0.8;
-    max-width: 500px;
-    margin: 0 auto;
+    /* NOVO ↓ */
+    color: #fff;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
 }
 
 /* Reservas Content */
