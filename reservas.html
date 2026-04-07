@@ -439,5 +439,29 @@
     <!-- JavaScript -->
     <script src="js/main.js"></script>
     <script src="js/reservas.js"></script>
+
+    <script>
+const buttons = document.querySelectorAll(".option-btn");
+
+const selections = {};
+
+buttons.forEach(button => {
+    button.addEventListener("click", () => {
+        const group = button.dataset.group;
+
+        // limpar grupo
+        document.querySelectorAll(`.option-btn[data-group="${group}"]`)
+            .forEach(btn => btn.classList.remove("active"));
+
+        // ativar botão clicado
+        button.classList.add("active");
+
+        // guardar escolha
+        selections[group] = button.textContent;
+
+        console.log(selections);
+    });
+});
+</script>
 </body>
 </html>
