@@ -1,1 +1,639 @@
+/**
+ * MIDO Restaurante v2 - Menu JavaScript
+ * Funcionalidades avançadas do menu
+ */
 
+// ============================================
+// MENU DATA
+// ============================================
+const menuItems = [
+    {
+        id: 1,
+        name: "Pizza Margherita",
+        category: "pizza",
+        price: 650,
+        description: "Molho de tomate, mozzarella fresca, manjericão e azeite extravirgem.",
+        image: "images/menu-pizza.jpg",
+        badges: ["vegetarian"],
+        calories: "850 kcal",
+        time: "25 min",
+        popular: true
+    },
+    {
+        id: 2,
+        name: "Bacalhau com Natas",
+        category: "peixe",
+        price: 890,
+        description: "Camadas de bacalhau desfiado, batata e cebola, gratinadas com creme e queijo.",
+        image: "images/featured-bacalhau.jpg",
+        badges: [],
+        calories: "720 kcal",
+        time: "35 min",
+        popular: true
+    },
+    {
+        id: 3,
+        name: "Frango Piri-Piri",
+        category: "carne",
+        price: 750,
+        description: "Frango grelhado com molho piri-piri caseiro, batatas fritas e salada.",
+        image: "images/prato-frango.jpg",
+        badges: ["spicy"],
+        calories: "950 kcal",
+        time: "30 min",
+        popular: false
+    },
+    {
+        id: 4,
+        name: "Polvo à Lagareiro",
+        category: "peixe",
+        price: 1200,
+        description: "Polvo grelhado com batatas a murro, alho e azeite aromatizado.",
+        image: "images/prato-polvo.jpg",
+        badges: [],
+        calories: "680 kcal",
+        time: "40 min",
+        popular: true
+    },
+    {
+        id: 5,
+        name: "Cataplana de Marisco",
+        category: "peixe",
+        price: 1450,
+        description: "Mariscos frescos em molho de tomate com coentros e pimentos.",
+        image: "images/prato-cataplana.jpg",
+        badges: [],
+        calories: "580 kcal",
+        time: "35 min",
+        popular: false
+    },
+    {
+        id: 6,
+        name: "Pastel de Nata",
+        category: "sobremesa",
+        price: 180,
+        description: "Tarte de creme dourada com canela e açúcar em pó.",
+        image: "images/prato-nata.jpg",
+        badges: ["vegetarian"],
+        calories: "280 kcal",
+        time: "10 min",
+        popular: true
+    },
+    {
+        id: 7,
+        name: "Arroz de Marisco",
+        category: "peixe",
+        price: 1350,
+        description: "Arroz cremoso com camarões, amêijoas, mexilhões e lagosta.",
+        image: "images/prato-arroz.jpg",
+        badges: [],
+        calories: "720 kcal",
+        time: "40 min",
+        popular: false
+    },
+    {
+        id: 8,
+        name: "Bife à Portuguesa",
+        category: "carne",
+        price: 820,
+        description: "Bife grelhado com ovo estrelado, batatas fritas, arroz e salada.",
+        image: "images/prato-bife.jpg",
+        badges: [],
+        calories: "1050 kcal",
+        time: "25 min",
+        popular: true
+    },
+    {
+        id: 9,
+        name: "Sopa de Legumes",
+        category: "entrada",
+        price: 280,
+        description: "Sopa cremosa de legumes com couve, feijão e chouriço.",
+        image: "images/prato-sopa.jpg",
+        badges: [],
+        calories: "320 kcal",
+        time: "15 min",
+        popular: false
+    },
+    {
+        id: 10,
+        name: "Tábua de Queijos",
+        category: "entrada",
+        price: 650,
+        description: "Seleção de queijos portugueses com presunto, mel e azeitonas.",
+        image: "images/prato-tabua.jpg",
+        badges: [],
+        calories: "480 kcal",
+        time: "10 min",
+        popular: false
+    },
+    {
+        id: 11,
+        name: "Sardinhas Assadas",
+        category: "peixe",
+        price: 580,
+        description: "Sardinhas grelhadas com pimentos assados e batatas cozidas.",
+        image: "images/prato-sardinhas.jpg",
+        badges: [],
+        calories: "520 kcal",
+        time: "25 min",
+        popular: false
+    },
+    {
+        id: 12,
+        name: "Mousse de Chocolate",
+        category: "sobremesa",
+        price: 220,
+        description: "Mousse de chocolate negro com raspas de chocolate.",
+        image: "images/prato-mousse.jpg",
+        badges: ["vegetarian"],
+        calories: "350 kcal",
+        time: "10 min",
+        popular: false
+    },
+    {
+        id: 13,
+        name: "Salada Mediterrânica",
+        category: "salada",
+        price: 450,
+        description: "Mix de folhas, tomate cherry, feta, azeitonas e molho de limão.",
+        image: "images/menu-salad.jpg",
+        badges: ["vegetarian"],
+        calories: "280 kcal",
+        time: "10 min",
+        popular: false
+    },
+    {
+        id: 14,
+        name: "Sanduíche Gourmet",
+        category: "carne",
+        price: 480,
+        description: "Pão rústico com presunto, queijo brie, rúcula e molho de mostarda.",
+        image: "images/menu-sandwich.jpg",
+        badges: [],
+        calories: "580 kcal",
+        time: "15 min",
+        popular: false
+    }
+];
+
+// ============================================
+// STATE
+// ============================================
+let state = {
+    category: 'all',
+    search: '',
+    view: 'grid',
+    favorites: JSON.parse(localStorage.getItem('mido-favorites') || '[]'),
+    cart: JSON.parse(localStorage.getItem('mido-cart') || '[]'),
+    currentItem: null,
+    quantity: 1
+};
+
+// ============================================
+// DOM ELEMENTS
+// ============================================
+const menuGrid = document.getElementById('menuGrid');
+const searchInput = document.getElementById('searchInput');
+const categoryFilter = document.getElementById('categoryFilter');
+const viewToggle = document.querySelector('.view-toggle');
+const itemsCount = document.getElementById('itemsCount');
+const favoritesCount = document.getElementById('favoritesCount');
+const noResults = document.getElementById('noResults');
+const clearFilters = document.getElementById('clearFilters');
+
+// Modal elements
+const productModal = document.getElementById('productModal');
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalClose = document.getElementById('modalClose');
+const modalImage = document.getElementById('modalImage');
+const modalCategory = document.getElementById('modalCategory');
+const modalTitle = document.getElementById('modalTitle');
+const modalPrice = document.getElementById('modalPrice');
+const modalDesc = document.getElementById('modalDesc');
+const modalDetails = document.getElementById('modalDetails');
+const qtyMinus = document.getElementById('qtyMinus');
+const qtyPlus = document.getElementById('qtyPlus');
+const qtyValue = document.getElementById('qtyValue');
+const addToCart = document.getElementById('addToCart');
+const orderWhatsApp = document.getElementById('orderWhatsApp');
+
+// Cart elements
+const cartBtn = document.getElementById('cartBtn');
+const cartCount = document.getElementById('cartCount');
+const cartOverlay = document.getElementById('cartOverlay');
+const cartSidebar = document.getElementById('cartSidebar');
+const cartClose = document.getElementById('cartClose');
+const cartItems = document.getElementById('cartItems');
+const cartFooter = document.getElementById('cartFooter');
+const cartTotal = document.getElementById('cartTotal');
+const checkoutBtn = document.getElementById('checkoutBtn');
+
+// Toast
+const toast = document.getElementById('toast');
+const toastText = document.getElementById('toastText');
+
+// ============================================
+// RENDER MENU
+// ============================================
+function renderMenu() {
+    // Filter items
+    let filtered = menuItems.filter(item => {
+        const matchesCategory = state.category === 'all' || item.category === state.category;
+        const matchesSearch = item.name.toLowerCase().includes(state.search.toLowerCase()) ||
+                             item.description.toLowerCase().includes(state.search.toLowerCase());
+        return matchesCategory && matchesSearch;
+    });
+
+    // Update counts
+    itemsCount.textContent = `${filtered.length} prato${filtered.length !== 1 ? 's' : ''}`;
+    favoritesCount.textContent = `${state.favorites.length} favorito${state.favorites.length !== 1 ? 's' : ''}`;
+
+    // Show/hide no results
+    if (filtered.length === 0) {
+        menuGrid.style.display = 'none';
+        noResults.style.display = 'block';
+    } else {
+        menuGrid.style.display = state.view === 'grid' ? 'grid' : 'flex';
+        noResults.style.display = 'none';
+    }
+
+    // Render items
+    menuGrid.innerHTML = filtered.map(item => createMenuCard(item)).join('');
+    menuGrid.className = state.view === 'grid' ? 'menu-grid' : 'menu-list';
+
+    // Add event listeners to cards
+    menuGrid.querySelectorAll('.menu-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            if (e.target.closest('.favorite-btn') || e.target.closest('.card-btn')) return;
+            const id = parseInt(card.dataset.id);
+            openModal(menuItems.find(i => i.id === id));
+        });
+    });
+
+    // Favorite buttons
+    menuGrid.querySelectorAll('.favorite-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = parseInt(btn.dataset.id);
+            toggleFavorite(id);
+        });
+    });
+
+    // Add to cart buttons
+    menuGrid.querySelectorAll('.card-btn-primary').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = parseInt(btn.dataset.id);
+            const item = menuItems.find(i => i.id === id);
+            addToCartFn(item, 1);
+        });
+    });
+}
+
+function createMenuCard(item) {
+    const isFavorite = state.favorites.includes(item.id);
+    const categoryLabels = {
+        pizza: 'Pizza',
+        carne: 'Carne',
+        peixe: 'Peixe',
+        salada: 'Salada',
+        sobremesa: 'Sobremesa',
+        entrada: 'Entrada'
+    };
+
+    const badgesHtml = item.badges.map(badge => {
+        const badgeClass = badge === 'vegetarian' ? 'badge-vegetarian' : 
+                          badge === 'spicy' ? 'badge-spicy' : '';
+        const badgeText = badge === 'vegetarian' ? '🌱 Vegetariano' : 
+                         badge === 'spicy' ? '🌶️ Picante' : '';
+        return `<span class="card-badge ${badgeClass}">${badgeText}</span>`;
+    }).join('');
+
+    const popularBadge = item.popular ? '<span class="card-badge badge-popular">⭐ Popular</span>' : '';
+
+    return `
+        <div class="menu-card" data-id="${item.id}">
+            <div class="menu-card-image">
+                <img src="${item.image}" alt="${item.name}" loading="lazy">
+                <div class="card-badges">
+                    ${badgesHtml}
+                    ${popularBadge}
+                </div>
+                <button class="favorite-btn ${isFavorite ? 'active' : ''}" data-id="${item.id}" aria-label="Favorito">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="menu-card-content">
+                <div class="menu-card-header">
+                    <h3 class="menu-card-title">${item.name}</h3>
+                    <span class="menu-card-price">${item.price} MT</span>
+                </div>
+                <p class="menu-card-desc">${item.description}</p>
+                <div class="menu-card-meta">
+                    <span>🔥 ${item.calories}</span>
+                    <span>⏱️ ${item.time}</span>
+                </div>
+            </div>
+            <div class="menu-card-actions">
+                <button class="card-btn card-btn-primary" data-id="${item.id}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 2L6 9H3L5 20H19L21 9H18L15 2H9Z"/>
+                    </svg>
+                    Adicionar
+                </button>
+                <button class="card-btn card-btn-secondary" onclick="openModal(menuItems.find(i => i.id === ${item.id}))">
+                    Ver detalhes
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+// ============================================
+// FILTER & SEARCH
+// ============================================
+if (categoryFilter) {
+    categoryFilter.addEventListener('click', (e) => {
+        const btn = e.target.closest('.category-btn');
+        if (!btn) return;
+
+        categoryFilter.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.category = btn.dataset.category;
+        renderMenu();
+    });
+}
+
+if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+        state.search = e.target.value;
+        renderMenu();
+    });
+}
+
+if (clearFilters) {
+    clearFilters.addEventListener('click', () => {
+        state.category = 'all';
+        state.search = '';
+        searchInput.value = '';
+        categoryFilter.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+        categoryFilter.querySelector('[data-category="all"]').classList.add('active');
+        renderMenu();
+    });
+}
+
+// ============================================
+// VIEW TOGGLE
+// ============================================
+if (viewToggle) {
+    viewToggle.addEventListener('click', (e) => {
+        const btn = e.target.closest('.view-btn');
+        if (!btn) return;
+
+        viewToggle.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.view = btn.dataset.view;
+        renderMenu();
+    });
+}
+
+// ============================================
+// FAVORITES
+// ============================================
+function toggleFavorite(id) {
+    const index = state.favorites.indexOf(id);
+    if (index > -1) {
+        state.favorites.splice(index, 1);
+        showToast('Removido dos favoritos');
+    } else {
+        state.favorites.push(id);
+        showToast('Adicionado aos favoritos');
+    }
+    localStorage.setItem('mido-favorites', JSON.stringify(state.favorites));
+    renderMenu();
+}
+
+// ============================================
+// MODAL
+// ============================================
+function openModal(item) {
+    state.currentItem = item;
+    state.quantity = 1;
+
+    const categoryLabels = {
+        pizza: 'Pizza',
+        carne: 'Carne',
+        peixe: 'Peixe',
+        salada: 'Salada',
+        sobremesa: 'Sobremesa',
+        entrada: 'Entrada'
+    };
+
+    modalImage.src = item.image;
+    modalImage.alt = item.name;
+    modalCategory.textContent = categoryLabels[item.category];
+    modalTitle.textContent = item.name;
+    modalPrice.textContent = `${item.price} MT`;
+    modalDesc.textContent = item.description;
+    qtyValue.textContent = '1';
+
+    modalDetails.innerHTML = `
+        <div class="modal-detail">
+            <span>Calorias</span>
+            <span>${item.calories}</span>
+        </div>
+        <div class="modal-detail">
+            <span>Tempo de preparo</span>
+            <span>${item.time}</span>
+        </div>
+        <div class="modal-detail">
+            <span>Categoria</span>
+            <span>${categoryLabels[item.category]}</span>
+        </div>
+    `;
+
+    productModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    productModal.classList.remove('active');
+    document.body.style.overflow = '';
+    state.currentItem = null;
+}
+
+if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+if (modalClose) modalClose.addEventListener('click', closeModal);
+
+// Quantity controls
+if (qtyMinus) {
+    qtyMinus.addEventListener('click', () => {
+        if (state.quantity > 1) {
+            state.quantity--;
+            qtyValue.textContent = state.quantity;
+        }
+    });
+}
+
+if (qtyPlus) {
+    qtyPlus.addEventListener('click', () => {
+        state.quantity++;
+        qtyValue.textContent = state.quantity;
+    });
+}
+
+// Add to cart from modal
+if (addToCart) {
+    addToCart.addEventListener('click', () => {
+        if (state.currentItem) {
+            addToCartFn(state.currentItem, state.quantity);
+            closeModal();
+        }
+    });
+}
+
+// Order via WhatsApp from modal
+if (orderWhatsApp) {
+    orderWhatsApp.addEventListener('click', () => {
+        if (state.currentItem) {
+            const message = `Olá! Gostaria de pedir:\n\n${state.quantity}x ${state.currentItem.name} - ${state.currentItem.price * state.quantity} MT\n\nObrigado!`;
+            window.open(`https://wa.me/258840000000?text=${encodeURIComponent(message)}`, '_blank');
+        }
+    });
+}
+
+// ============================================
+// CART
+// ============================================
+function addToCartFn(item, quantity) {
+    const existing = state.cart.find(i => i.id === item.id);
+    if (existing) {
+        existing.quantity += quantity;
+    } else {
+        state.cart.push({ ...item, quantity });
+    }
+    localStorage.setItem('mido-cart', JSON.stringify(state.cart));
+    updateCartUI();
+    showToast(`${item.name} adicionado ao pedido`);
+}
+
+function removeFromCart(id) {
+    state.cart = state.cart.filter(i => i.id !== id);
+    localStorage.setItem('mido-cart', JSON.stringify(state.cart));
+    updateCartUI();
+}
+
+function updateCartQuantity(id, delta) {
+    const item = state.cart.find(i => i.id === id);
+    if (item) {
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+            removeFromCart(id);
+        } else {
+            localStorage.setItem('mido-cart', JSON.stringify(state.cart));
+            updateCartUI();
+        }
+    }
+}
+
+function updateCartUI() {
+    const totalItems = state.cart.reduce((sum, i) => sum + i.quantity, 0);
+    const totalPrice = state.cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+
+    cartCount.textContent = totalItems;
+
+    if (state.cart.length === 0) {
+        cartItems.innerHTML = `
+            <div class="cart-empty">
+                <div class="cart-empty-icon">🛒</div>
+                <p class="cart-empty-text">Seu carrinho está vazio</p>
+            </div>
+        `;
+        cartFooter.style.display = 'none';
+    } else {
+        cartItems.innerHTML = state.cart.map(item => `
+            <div class="cart-item">
+                <div class="cart-item-image">
+                    <img src="${item.image}" alt="${item.name}">
+                </div>
+                <div class="cart-item-info">
+                    <h4 class="cart-item-title">${item.name}</h4>
+                    <p class="cart-item-price">${item.price} MT</p>
+                    <div class="cart-item-actions">
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="updateCartQuantity(${item.id}, -1)">−</button>
+                            <span class="quantity-value">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="updateCartQuantity(${item.id}, 1)">+</button>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeFromCart(${item.id})">Remover</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        cartFooter.style.display = 'block';
+        cartTotal.textContent = `${totalPrice} MT`;
+    }
+}
+
+function openCart() {
+    cartOverlay.classList.add('active');
+    cartSidebar.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCartFn() {
+    cartOverlay.classList.remove('active');
+    cartSidebar.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+if (cartBtn) cartBtn.addEventListener('click', openCart);
+if (cartClose) cartClose.addEventListener('click', closeCartFn);
+if (cartOverlay) cartOverlay.addEventListener('click', closeCartFn);
+
+// Checkout
+if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', () => {
+        if (state.cart.length === 0) return;
+
+        let message = 'Olá! Gostaria de fazer o seguinte pedido:\n\n';
+        let total = 0;
+
+        state.cart.forEach(item => {
+            message += `${item.quantity}x ${item.name} - ${item.price * item.quantity} MT\n`;
+            total += item.price * item.quantity;
+        });
+
+        message += `\nTotal: ${total} MT\n\nObrigado!`;
+        window.open(`https://wa.me/258840000000?text=${encodeURIComponent(message)}`, '_blank');
+    });
+}
+
+// ============================================
+// TOAST
+// ============================================
+function showToast(text) {
+    toastText.textContent = text;
+    toast.classList.add('active');
+    setTimeout(() => {
+        toast.classList.remove('active');
+    }, 3000);
+}
+
+// ============================================
+// INITIALIZE
+// ============================================
+if (menuGrid) {
+    renderMenu();
+    updateCartUI();
+}
+
+// Make functions globally available
+window.openModal = openModal;
+window.toggleFavorite = toggleFavorite;
+window.addToCartFn = addToCartFn;
+window.removeFromCart = removeFromCart;
+window.updateCartQuantity = updateCartQuantity;
