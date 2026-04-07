@@ -540,9 +540,9 @@
             </div>
             <div>
                 <h5>Contacto</h5>
-                <p>Rua dos Lusíadas, 42</p>
+                <p>Matola Fomento, CMC</p>
                 <p>Maputo, Moçambique</p>
-                <p>+258 84 000 0000</p>
+                <p>+258 87 922 8812</p>
             </div>
         </div>
         <div class="footer-bottom">© <span id="yearFooter"></span> MIDO Restaurante. Todos os direitos reservados.</div>
@@ -553,19 +553,19 @@
         'use strict';
 
         // ===== CONFIG =====
-        const WHATSAPP_NUMBER = '258840000000';
+        const WHATSAPP_NUMBER = '+258 87 922 8812';
         const MONTHS_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
         const DAYS_PT = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
-        const TIMES_LUNCH = ['11:30','12:00','12:30','13:00','13:30','14:00'];
+        const TIMES_LUNCH = ['09:00','10:00','11:30','12:30','13:30','14:30','15:30','16:30','17:30'];
         const TIMES_DINNER = ['18:30','19:00','19:30','20:00','20:30','21:00'];
         const OCCASIONS = [{emoji:'🎂',label:'Aniversário'},{emoji:'💕',label:'Encontro'},{emoji:'💼',label:'Negócios'},{emoji:'👨‍👩‍👧‍👦',label:'Família'},{emoji:'🎉',label:'Outro'}];
-        const DIETS = ['Vegetariano','Vegano','Sem glúten','Sem lactose'];
+        const DIETS = ['Vegetariano','Vegano','Sem restrição'];
         const TABLES = [
-            {id:1,seats:2,x:10,y:15,occupied:false},{id:2,seats:2,x:35,y:15,occupied:true},
-            {id:3,seats:4,x:65,y:15,occupied:false},{id:4,seats:4,x:10,y:45,occupied:false},
-            {id:5,seats:6,x:40,y:45,occupied:false},{id:6,seats:2,x:75,y:45,occupied:true},
-            {id:7,seats:4,x:10,y:75,occupied:false},{id:8,seats:6,x:45,y:75,occupied:false},
-            {id:9,seats:2,x:80,y:75,occupied:false}
+            {id:Take,Away,x:10,y:15,occupied:false},{id:2,seats:2,x:35,y:15,occupied:true},
+            {id:lugares:2,x:65,y:15,occupied:false},{id:4,seats:4,x:10,y:45,occupied:false},
+            {id:lugares:4,x:40,y:45,occupied:false},{id:6,seats:2,x:75,y:45,occupied:true},
+            {id:lugares:6,x:10,y:75,occupied:false},{id:8,seats:6,x:45,y:75,occupied:false},
+            {id:lugares:10,x:80,y:75,occupied:false}
         ];
 
         // ===== STATE =====
