@@ -461,7 +461,7 @@ function showSuccessModal() {
         preferencesStr +
         notesStr;
     
-    successBtn.href = `https://wa.me/258840000000?text=${message}`;
+    successBtn.href = `https://wa.me/+258879228812?text=${message}`;
 }
 
 // Close success modal on backdrop click
