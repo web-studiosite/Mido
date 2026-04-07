@@ -381,3 +381,16 @@
     pointer-events: none;
     opacity: 0.2;
 }
+
+/* FORÇAR MENU À FRENTE */
+.menu-content {
+    position: relative;
+    z-index: 10;
+}
+
+/* OVERLAYS ATRÁS */
+.grain-overlay,
+.menu-hero-overlay {
+    z-index: 0 !important;
+    opacity: 0.1 !important;
+}
