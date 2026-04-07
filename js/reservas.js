@@ -461,7 +461,8 @@ function showSuccessModal() {
         preferencesStr +
         notesStr;
     
-    successBtn.href = `https://wa.me/+258879228812?text=${message}`;
+    const WHATSAPP_NUMBER = "258879228812";
+successBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
 }
 
 // Close success modal on backdrop click
