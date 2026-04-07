@@ -500,7 +500,7 @@ if (orderWhatsApp) {
     orderWhatsApp.addEventListener('click', () => {
         if (state.currentItem) {
             const message = `Olá! Gostaria de pedir:\n\n${state.quantity}x ${state.currentItem.name} - ${state.currentItem.price * state.quantity} MT\n\nObrigado!`;
-            window.open(`https://wa.me/258840000000?text=${encodeURIComponent(message)}`, '_blank');
+            window.open(`https://wa.me/+258879228812?text=${encodeURIComponent(message)}`, '_blank');
         }
     });
 }
@@ -608,7 +608,7 @@ if (checkoutBtn) {
         });
 
         message += `\nTotal: ${total} MT\n\nObrigado!`;
-        window.open(`https://wa.me/258840000000?text=${encodeURIComponent(message)}`, '_blank');
+        window.open(`https://wa.me/+258879228812?text=${encodeURIComponent(message)}`, '_blank');
     });
 }
 
