@@ -480,3 +480,23 @@ if (datePickerGrid) {
     renderTableMap();
     checkStep1Complete();
 }
+// FORÇAR TODOS OS LINKS DO WHATSAPP
+const FORCE_WHATSAPP_NUMBER = "258879228812";
+
+// Função para corrigir links existentes
+function forceWhatsAppLinks() {
+    const links = document.querySelectorAll('a[href*="wa.me"]');
+
+    links.forEach(link => {
+        const url = new URL(link.href);
+
+        // mantém a mensagem (?text=...)
+        const text = url.searchParams.get("text");
+
+        // recria o link com o número correto
+        link.href = `https://wa.me/${FORCE_WHATSAPP_NUMBER}` + (text ? `?text=${text}` : '');
+    });
+}
+
+// Executar ao carregar a página
+document.addEventListener("DOMContentLoaded", forceWhatsAppLinks);
