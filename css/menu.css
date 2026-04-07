@@ -1,16 +1,23 @@
 /* ============================================
-   FIXES DE CORES (ADICIONADO)
+   FIXES DE CORES (ADICIONADO E MELHORADO)
    ============================================ */
 
 :root {
   --bg-primary: #f6f2ea;
   --bg-secondary: #0b1e1b;
-
-  --text-primary: #1a1a1a;
-  --text-secondary: #6b6b6b;
+  
+  /* CORES DE TEXTO COM MELHOR CONTRASTE */
+  --text-primary: #0d0d0d;      /* Preto quase puro para máximo contraste */
+  --text-secondary: #4a4a4a;    /* Cinza escuro - contraste 9:1 em fundo branco */
+  --text-muted: #595959;        /* Cinza médio - mínimo 4.5:1 para AA */
   --text-light: #ffffff;
-
+  
   --accent: #d4a03a;
+  
+  /* NOVAS VARIÁVEIS PARA CONSISTÊNCIA */
+  --card-bg: #ffffff;
+  --input-bg: #ffffff;
+  --border-color: rgba(0,0,0,0.12);
 }
 
 /* ============================================
@@ -70,13 +77,16 @@
     letter-spacing: 0.02em;
     text-transform: uppercase;
     margin-bottom: var(--space-md);
+    color: var(--text-light); /* GARANTIR BRANCO */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3); /* SOMBRA PARA LEGIBILIDADE */
 }
 
 .menu-hero-subtitle {
     font-size: 1.2rem;
-    opacity: 0.8;
+    opacity: 0.9; /* AUMENTADO DE 0.8 */
     max-width: 500px;
     margin: 0 auto;
+    color: var(--text-light); /* GARANTIR BRANCO */
 }
 
 /* Menu Controls Bar */
@@ -84,14 +94,14 @@
     position: sticky;
     top: 70px;
     z-index: 100;
-    background: rgba(246, 242, 234, 0.95);
+    background: rgba(246, 242, 234, 0.98); /* AUMENTADO OPACIDADE */
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0,0,0,0.06);
+    border-bottom: 1px solid var(--border-color);
     padding: var(--space-md) 0;
 }
 
 [data-theme="dark"] .menu-controls {
-    background: rgba(15, 26, 23, 0.95);
+    background: rgba(15, 26, 23, 0.98);
 }
 
 .menu-controls-container {
@@ -115,18 +125,24 @@
 .menu-search input {
     width: 100%;
     padding: var(--space-sm) var(--space-md) var(--space-sm) 44px;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 2px solid var(--border-color); /* BORDA MAIS VISÍVEL */
     border-radius: var(--radius-full);
-    background: #ffffff; /* FIX */
-    color: #1a1a1a; /* FIX */
-    font-size: 0.9rem;
+    background: var(--input-bg);
+    color: var(--text-primary); /* USAR VARIÁVEL */
+    font-size: 0.95rem; /* AUMENTADO */
+    font-weight: 500; /* PESO MÉDIO */
     transition: var(--transition-base);
 }
 
 .menu-search input:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(212, 160, 58, 0.15);
+    box-shadow: 0 0 0 4px rgba(212, 160, 58, 0.2); /* AUMENTADO */
+}
+
+.menu-search input::placeholder {
+    color: var(--text-muted); /* COR DEFINIDA PARA PLACEHOLDER */
+    opacity: 1;
 }
 
 .menu-search svg {
@@ -134,8 +150,8 @@
     left: var(--space-md);
     top: 50%;
     transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
+    width: 20px; /* AUMENTADO */
+    height: 20px;
     color: var(--text-secondary);
 }
 
@@ -158,33 +174,38 @@
     align-items: center;
     gap: var(--space-xs);
     padding: var(--space-sm) var(--space-md);
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 2px solid var(--border-color); /* BORDA MAIS VISÍVEL */
     border-radius: var(--radius-full);
-    background: #ffffff; /* FIX */
-    color: #1a1a1a; /* FIX */
+    background: var(--card-bg);
+    color: var(--text-primary); /* ESCURO SUFICIENTE */
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.75rem; /* AUMENTADO */
+    font-weight: 600; /* SEMI-BOLD */
     text-transform: uppercase;
     letter-spacing: 0.08em;
     white-space: nowrap;
     transition: var(--transition-base);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* SUTILEZA */
 }
 
 .category-btn:hover {
     border-color: var(--accent);
     color: var(--accent);
+    background: rgba(212, 160, 58, 0.05); /* FUNDO SUTIL NO HOVER */
 }
 
 .category-btn.active {
     background: var(--accent);
     border-color: var(--accent);
-    color: var(--bg-secondary);
+    color: #1a1a1a; /* PRETO PARA CONTRASTE COM DOURADO */
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(212, 160, 58, 0.3);
 }
 
 /* Menu Content */
 .menu-content {
     padding: var(--space-2xl) 0 var(--space-4xl);
-    background: #f6f2ea; /* FIX PRINCIPAL */
+    background: var(--bg-primary);
     min-height: 60vh;
 }
 
@@ -195,31 +216,46 @@
     gap: var(--space-xl);
 }
 
-/* Menu Card */
+/* Menu Card - MELHORADO */
 .menu-card {
-    background: #ffffff; /* FIX MAIS IMPORTANTE */
+    background: var(--card-bg);
     border-radius: var(--radius-xl);
     overflow: hidden;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04); /* SOMBRA MAIS VISÍVEL */
     transition: var(--transition-base);
     position: relative;
+    border: 1px solid var(--border-color); /* BORDA SUTIL */
 }
 
 .menu-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-8px); /* MAIS PRONUNCIADO */
+    box-shadow: 0 12px 24px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08);
 }
 
 .menu-card-image {
     position: relative;
     height: 220px;
     overflow: hidden;
+    background: var(--bg-primary); /* PLACEHOLDER COLOR */
 }
 
 .menu-card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block; /* REMOVER ESPAÇO EXTRA */
+}
+
+/* OVERLAY ESCURO PARA GARANTIR VISIBILIDADE DE TEXTO SOBRE IMAGENS */
+.menu-card-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+    pointer-events: none;
 }
 
 .menu-card-content {
@@ -228,22 +264,84 @@
 
 .menu-card-title {
     font-family: var(--font-heading);
-    font-size: 1.1rem;
+    font-size: 1.15rem; /* AUMENTADO */
     font-weight: 700;
-    color: #1a1a1a; /* FIX */
+    color: var(--text-primary); /* VARIÁVEL CONTRASTANTE */
+    margin-bottom: var(--space-xs);
+    line-height: 1.3;
 }
 
 .menu-card-price {
     font-family: var(--font-heading);
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 1.25rem; /* AUMENTADO */
+    font-weight: 800; /* EXTRA BOLD */
     color: var(--accent);
+    margin-bottom: var(--space-sm);
+    display: block;
 }
 
 .menu-card-desc {
-    font-size: 0.875rem;
-    color: #6b6b6b; /* FIX */
+    font-size: 0.9rem; /* AUMENTADO */
+    color: var(--text-secondary); /* CINZA MAIS ESCURO 4a4a4a */
     line-height: 1.6;
+    margin: 0;
 }
 
-/* (continua igual para modal, cart, etc... já estão OK) */
+/* BADGE/ETIQUETA NO CARD (SE HOUVER) */
+.menu-card-badge {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    background: var(--accent);
+    color: #1a1a1a;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    z-index: 2;
+}
+
+/* GARANTIR VISIBILIDADE EM LINKS DO WHATSAPP */
+.whatsapp-link,
+.contact-whatsapp {
+    color: #25D366 !important; /* COR OFICIAL WHATSAPP */
+    background: #ffffff;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    box-shadow: 0 2px 8px rgba(37, 211, 102, 0.2);
+    border: 2px solid #25D366;
+}
+
+.whatsapp-link:hover,
+.contact-whatsapp:hover {
+    background: #25D366;
+    color: #ffffff !important;
+}
+
+/* UTILITÁRIOS DE VISIBILIDADE */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* DEBUG MODE - DESCOMENTE PARA TESTAR BORDAS */
+/*
+.menu-card,
+.menu-search input,
+.category-btn {
+    outline: 1px solid red !important;
+}
+*/
