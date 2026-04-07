@@ -1219,3 +1219,22 @@ input, select, textarea {
         padding: 0 var(--space-md);
     }
 }
+/* CORREÇÃO GLOBAL RESPONSIVA */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+}
+
+/* FORÇA TODOS ELEMENTOS A NÃO SAÍREM DA TELA */
+* {
+  max-width: 100%;
+}
