@@ -345,3 +345,39 @@
     outline: 1px solid red !important;
 }
 */
+
+/* FIX VISIBILIDADE MENU */
+
+.menu-content,
+.menu-grid,
+.menu-card,
+.menu-card * {
+    color: #1a1a1a !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Garantir fundo correto */
+.menu-content {
+    background: #f5e6d3 !important;
+}
+
+/* Garantir contraste */
+.menu-card {
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+}
+
+/* Texto interno */
+.menu-card-title,
+.menu-card-desc,
+.menu-card-price {
+    color: #1a1a1a !important;
+}
+
+/* Evitar overlays a esconder conteúdo */
+.menu-hero-overlay,
+.grain-overlay {
+    pointer-events: none;
+    opacity: 0.2;
+}
