@@ -1238,3 +1238,30 @@ body {
 * {
   max-width: 100%;
 }
+html, body {
+  overflow-x: hidden;
+}
+
+/* CORREÇÃO PRINCIPAL */
+.hero,
+.nav-container,
+.container {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* REMOVE EXCESSO EM MOBILE */
+@media (max-width: 768px) {
+  .hero {
+    min-height: auto;
+    height: auto;
+    padding-top: 120px;
+    padding-bottom: 60px;
+  }
+
+  .nav-container,
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
